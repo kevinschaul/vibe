@@ -1,0 +1,90 @@
+import { PlatformId } from "@/types";
+
+// Bluesky butterfly SVG
+function BlueskyIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 360 320" fill="currentColor">
+      <path d="M180 142c-16.3-31.7-60.7-90.8-102-120C48.6 4.7 23.3-7 8.5 4.2c-15.8 11.9-12 41.9 4.6 73.2 12 22.4 32.5 47.5 53.8 67.3H57c-25 0-40.3 14.5-40 34 0.3 22.6 11.7 34 40 34h6c-21.3 20-41.8 44.9-53.8 67.3-16.6 31.3-20.4 61.3-4.6 73.2 14.8 11.2 40.1-0.5 69.5-18.8 41.3-29.2 85.7-88.3 102-120 16.3 31.7 60.7 90.8 102 120 29.4 18.3 54.7 30 69.5 18.8 15.8-11.9 12-41.9-4.6-73.2-12-22.4-32.5-47.3-53.8-67.3h6c28.3 0 39.7-11.4 40-34 0.3-19.5-15-34-40-34h-9.8c21.3-19.8 41.8-44.9 53.8-67.3 16.6-31.3 20.4-61.3 4.6-73.2-14.8-11.2-40.1 0.5-69.5 18.8-41.3 29.2-85.7 88.3-102 120z" />
+    </svg>
+  );
+}
+
+// X (Twitter) logo
+function XIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
+
+// Mastodon elephant
+function MastodonIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 74 79" fill="currentColor">
+      <path d="M73.7014 17.4323C72.7907 11.2948 67.0918 6.3884 61.3039 5.4776C60.2907 5.31647 56.2946 4.75215 47.0657 4.75215H46.9996C37.7707 4.75215 35.7905 5.31647 34.777 5.4776C29.2003 6.38256 23.253 10.8048 21.9492 17.0919C21.3153 20.172 21.244 23.5765 21.3798 26.7051C21.5768 31.4543 21.6124 36.1949 22.0512 40.9212C22.3449 43.8963 22.8344 46.8443 23.5166 49.7474C24.7556 55.0684 29.9736 59.5099 35.2152 61.3805C40.8317 63.3339 46.9194 63.6483 52.7033 62.2876C53.3783 62.1232 54.0434 61.931 54.6986 61.7112C56.1644 61.2015 57.8897 60.6341 59.1448 59.6387C59.1648 59.6228 59.1815 59.6029 59.1942 59.5803C59.2069 59.5576 59.2152 59.5324 59.2183 59.5065V55.7108C59.2166 55.685 59.2093 55.66 59.1967 55.6375C59.1841 55.615 59.1666 55.5954 59.1454 55.5801C59.1242 55.5648 59.1 55.5542 59.0743 55.549C59.0487 55.5438 59.0222 55.5442 58.9968 55.5502C56.8268 56.0605 54.6108 56.3158 52.3866 56.3099C47.3268 56.3099 45.4151 53.9296 44.8478 52.5268C44.3727 51.3319 44.0982 50.0694 44.034 48.7879C44.034 48.7879 49.3563 50.0834 52.3866 50.4434C59.2432 51.2521 65.7344 48.4379 66.4788 44.1188C67.7532 36.5558 67.6037 26.7051 67.6037 26.7051C67.5814 24.7685 66.7463 22.9242 65.3005 21.5741C63.8546 20.224 61.9238 19.4884 59.9873 19.5205H59.9836ZM55.3573 44.168H49.4422V28.5673C49.4422 25.3218 47.8516 23.6867 44.5884 23.6867C41.0266 23.6867 39.242 25.6283 39.242 29.4547V38.1369H33.3581V29.4547C33.3581 25.6283 31.5735 23.6867 28.0117 23.6867C24.7485 23.6867 23.1579 25.3218 23.1579 28.5673V44.168H17.2428V28.1262C17.2428 24.8802 17.9927 22.3258 19.4999 20.4531C21.0551 18.5813 23.0997 17.6212 25.6394 17.6212C28.5716 17.6212 30.7814 18.7883 32.1994 21.1093L33.359 23.1117L34.5195 21.1093C35.9375 18.7883 38.1473 17.6212 41.0795 17.6212C43.6192 17.6212 45.6638 18.5813 47.219 20.4531C48.7263 22.3258 49.4762 24.8802 49.4762 28.1262L49.4422 28.1377V44.168H55.3573Z" />
+    </svg>
+  );
+}
+
+// Blog/RSS icon
+function BlogIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 11a9 9 0 0 1 9 9" />
+      <path d="M4 4a16 16 0 0 1 16 16" />
+      <circle cx="5" cy="19" r="1" fill="currentColor" />
+    </svg>
+  );
+}
+
+const PLATFORM_COLORS: Record<PlatformId, string> = {
+  bluesky: "text-sky-500",
+  twitter: "text-zinc-900 dark:text-zinc-100",
+  mastodon: "text-indigo-500",
+  blog: "text-amber-500",
+};
+
+const PLATFORM_BG: Record<PlatformId, string> = {
+  bluesky: "bg-sky-50 dark:bg-sky-950",
+  twitter: "bg-zinc-100 dark:bg-zinc-800",
+  mastodon: "bg-indigo-50 dark:bg-indigo-950",
+  blog: "bg-amber-50 dark:bg-amber-950",
+};
+
+export function PlatformIcon({
+  platform,
+  size = 20,
+  className = "",
+  withBg = false,
+}: {
+  platform: PlatformId;
+  size?: number;
+  className?: string;
+  withBg?: boolean;
+}) {
+  const icon = (() => {
+    switch (platform) {
+      case "bluesky": return <BlueskyIcon size={size} />;
+      case "twitter": return <XIcon size={size} />;
+      case "mastodon": return <MastodonIcon size={size} />;
+      case "blog": return <BlogIcon size={size} />;
+    }
+  })();
+
+  if (withBg) {
+    return (
+      <span
+        className={`inline-flex items-center justify-center rounded-full p-2 ${PLATFORM_BG[platform]} ${PLATFORM_COLORS[platform]} ${className}`}
+      >
+        {icon}
+      </span>
+    );
+  }
+
+  return (
+    <span className={`${PLATFORM_COLORS[platform]} ${className}`}>
+      {icon}
+    </span>
+  );
+}
