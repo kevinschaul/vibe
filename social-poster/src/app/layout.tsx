@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Vibe — Social Media Manager",
-  description: "Post to Bluesky, X, Mastodon, and your blog from one place",
+  description: "Post to Bluesky, X, and Mastodon from one place",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

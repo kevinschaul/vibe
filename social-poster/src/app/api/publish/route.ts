@@ -23,21 +23,6 @@ interface PublishRequest {
         accessTokenSecret: string;
       };
     };
-    blog?: {
-      enabled: boolean;
-      credentials: {
-        type: string;
-        url: string;
-        username?: string;
-        password?: string;
-        apiKey?: string;
-        webhookUrl?: string;
-      };
-      title: string;
-      content: string;
-      slug?: string;
-      tags?: string[];
-    };
   };
 }
 
@@ -100,24 +85,6 @@ export async function POST(req: NextRequest) {
         })
         .catch((e) => {
           results.twitter = { error: e.message };
-        })
-    );
-  }
-
-  if (platforms.blog?.enabled && platforms.blog.credentials) {
-    const { credentials, title, content, slug, tags } = platforms.blog;
-    jobs.push(
-      fetch(`${baseUrl}/api/blog/post`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...credentials, title, content, slug, tags }),
-      })
-        .then((r) => r.json())
-        .then((data) => {
-          results.blog = data;
-        })
-        .catch((e) => {
-          results.blog = { error: e.message };
         })
     );
   }

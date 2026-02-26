@@ -8,18 +8,20 @@
 import { describe, it, expect } from "vitest";
 import { createHmac } from "crypto";
 
-const BEARER = process.env.TWITTER_TEST_BEARER_TOKEN;
 const API_KEY = process.env.TWITTER_TEST_API_KEY;
 const API_SECRET = process.env.TWITTER_TEST_API_SECRET;
 const ACCESS_TOKEN = process.env.TWITTER_TEST_ACCESS_TOKEN;
 const ACCESS_TOKEN_SECRET = process.env.TWITTER_TEST_ACCESS_TOKEN_SECRET;
 const CAN_POST = process.env.INTEGRATION_POST === "true";
 
-const canRead = !!BEARER;
-const canWrite = !!(API_KEY && API_SECRET && ACCESS_TOKEN && ACCESS_TOKEN_SECRET && CAN_POST);
+const canRead = !!(API_KEY && API_SECRET && ACCESS_TOKEN && ACCESS_TOKEN_SECRET);
+const canWrite = canRead && CAN_POST;
 
 function buildOAuthHeader(method: string, url: string): string {
-  const params: Record<string, string> = {
+  const parsed = new URL(url);
+  const baseUrl = `${parsed.protocol}//${parsed.host}${parsed.pathname}`;
+
+  const oauthParams: Record<string, string> = {
     oauth_consumer_key: API_KEY!,
     oauth_nonce: Math.random().toString(36).substring(2) + Date.now(),
     oauth_signature_method: "HMAC-SHA1",
@@ -28,16 +30,20 @@ function buildOAuthHeader(method: string, url: string): string {
     oauth_version: "1.0",
   };
 
-  const sorted = Object.keys(params)
+  // Merge query params into the parameter set for signing
+  const allParams: Record<string, string> = { ...oauthParams };
+  parsed.searchParams.forEach((v, k) => { allParams[k] = v; });
+
+  const sorted = Object.keys(allParams)
     .sort()
-    .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
+    .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(allParams[k])}`)
     .join("&");
 
-  const base = [method, encodeURIComponent(url), encodeURIComponent(sorted)].join("&");
+  const base = [method, encodeURIComponent(baseUrl), encodeURIComponent(sorted)].join("&");
   const signingKey = `${encodeURIComponent(API_SECRET!)}&${encodeURIComponent(ACCESS_TOKEN_SECRET!)}`;
   const sig = createHmac("sha1", signingKey).update(base).digest("base64");
 
-  const header: Record<string, string> = { ...params, oauth_signature: sig };
+  const header: Record<string, string> = { ...oauthParams, oauth_signature: sig };
   return (
     "OAuth " +
     Object.keys(header)
@@ -49,10 +55,8 @@ function buildOAuthHeader(method: string, url: string): string {
 
 describe.skipIf(!canRead)("Twitter/X API integration (read)", () => {
   it("fetches the authenticated user profile", async () => {
-    const res = await fetch(
-      "https://api.twitter.com/2/users/me?user.fields=public_metrics,profile_image_url,name,username",
-      { headers: { Authorization: `Bearer ${BEARER}` } }
-    );
+    const url = "https://api.twitter.com/2/users/me?user.fields=public_metrics,profile_image_url,name,username";
+    const res = await fetch(url, { headers: { Authorization: buildOAuthHeader("GET", url) } });
     const data = await res.json();
 
     expect(res.ok).toBe(true);
@@ -64,10 +68,8 @@ describe.skipIf(!canRead)("Twitter/X API integration (read)", () => {
   });
 
   it("returns proper field structure for user metrics", async () => {
-    const res = await fetch(
-      "https://api.twitter.com/2/users/me?user.fields=public_metrics",
-      { headers: { Authorization: `Bearer ${BEARER}` } }
-    );
+    const url = "https://api.twitter.com/2/users/me?user.fields=public_metrics";
+    const res = await fetch(url, { headers: { Authorization: buildOAuthHeader("GET", url) } });
     const data = await res.json();
 
     const metrics = data.data?.public_metrics;

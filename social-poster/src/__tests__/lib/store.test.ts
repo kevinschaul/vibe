@@ -55,15 +55,6 @@ const ANALYTICS: Record<PlatformId, AnalyticsData> = {
     replies: 200,
     lastUpdated: "2024-01-01T00:00:00Z",
   },
-  blog: {
-    platform: "blog",
-    followers: 0,
-    posts: 50,
-    likes: 0,
-    reposts: 0,
-    replies: 0,
-    lastUpdated: "2024-01-01T00:00:00Z",
-  },
 };
 
 describe("lib/store", () => {
@@ -91,7 +82,7 @@ describe("lib/store", () => {
       });
     });
 
-    it("handles all four platforms stored at once", () => {
+    it("handles all three platforms stored at once", () => {
       const allCreds: AccountCredentials = {
         bluesky: { handle: "alice.bsky.social", appPassword: "pass" },
         mastodon: { instance: "mastodon.social", accessToken: "tok" },
@@ -102,7 +93,6 @@ describe("lib/store", () => {
           accessTokenSecret: "ats",
           bearerToken: "bt",
         },
-        blog: { type: "wordpress", url: "https://myblog.com", username: "admin", password: "pass" },
       };
       saveCredentials(allCreds);
       expect(loadCredentials()).toEqual(allCreds);

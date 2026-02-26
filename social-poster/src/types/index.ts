@@ -1,4 +1,4 @@
-export type PlatformId = "bluesky" | "twitter" | "mastodon" | "blog";
+export type PlatformId = "bluesky" | "twitter" | "mastodon";
 
 export interface Platform {
   id: PlatformId;
@@ -24,14 +24,6 @@ export interface AccountCredentials {
     instance: string;
     accessToken: string;
   };
-  blog?: {
-    type: "wordpress" | "ghost" | "webhook";
-    url: string;
-    username?: string;
-    password?: string;
-    apiKey?: string;
-    webhookUrl?: string;
-  };
 }
 
 export interface ConnectedAccount {
@@ -49,8 +41,6 @@ export interface PlatformPost {
   enabled: boolean;
   thread?: string[]; // for long-form split into threads
   tags?: string[];
-  blogTitle?: string;
-  blogSlug?: string;
 }
 
 export interface PostDraft {
@@ -113,13 +103,6 @@ export const PLATFORMS: Platform[] = [
     name: "Mastodon",
     color: "#6364ff",
     charLimit: 500,
-    enabled: true,
-  },
-  {
-    id: "blog",
-    name: "Blog",
-    color: "#f59e0b",
-    charLimit: null,
     enabled: true,
   },
 ];

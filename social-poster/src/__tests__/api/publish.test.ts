@@ -137,30 +137,6 @@ describe("POST /api/publish", () => {
     expect(Object.keys(results)).toHaveLength(0);
   });
 
-  it("includes blog platform in fan-out", async () => {
-    const responses = new Map([
-      ["/api/blog/post", { success: true, postId: "42", url: "https://myblog.com/post" }],
-    ]);
-    vi.stubGlobal("fetch", makeMockFetch(responses));
-
-    const req = makeJsonRequest({
-      platforms: {
-        blog: {
-          enabled: true,
-          credentials: { type: "wordpress", url: "https://myblog.com", username: "admin", password: "pass" },
-          title: "My Blog Post",
-          content: "<p>Content</p>",
-        },
-      },
-    });
-
-    const res = await POST(req);
-    const body = await readJson(res) as Record<string, unknown>;
-    const results = body.results as Record<string, unknown>;
-
-    expect(results.blog).toBeDefined();
-  });
-
   it("returns empty results when no platforms are enabled", async () => {
     vi.stubGlobal("fetch", vi.fn());
 

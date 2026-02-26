@@ -44,19 +44,6 @@ const PLATFORM_FIELDS: Record<PlatformId, FieldDef[]> = {
     { key: "instance", label: "Instance URL", placeholder: "mastodon.social", help: "Your Mastodon server (e.g., mastodon.social)" },
     { key: "accessToken", label: "Access Token", placeholder: "", type: "password", help: "Settings → Development → New Application" },
   ],
-  blog: [
-    {
-      key: "type",
-      label: "Blog Type",
-      placeholder: "wordpress",
-      help: "wordpress, ghost, or webhook",
-    },
-    { key: "url", label: "Blog URL", placeholder: "https://yourblog.com" },
-    { key: "username", label: "Username (WordPress)", placeholder: "admin" },
-    { key: "password", label: "Password / App Password", placeholder: "", type: "password" },
-    { key: "apiKey", label: "Admin API Key (Ghost)", placeholder: "key_id:key_secret", type: "password" },
-    { key: "webhookUrl", label: "Webhook URL (Generic)", placeholder: "https://..." },
-  ],
 };
 
 function FormField({
@@ -332,15 +319,6 @@ export default function AccountsPage() {
         handle: data.handle,
         displayName: data.displayName,
         avatarUrl: data.avatarUrl,
-        connected: true,
-      };
-    }
-
-    if (platformId === "blog" && creds.blog) {
-      return {
-        platform: "blog",
-        handle: creds.blog.url,
-        displayName: creds.blog.type.charAt(0).toUpperCase() + creds.blog.type.slice(1) + " Blog",
         connected: true,
       };
     }

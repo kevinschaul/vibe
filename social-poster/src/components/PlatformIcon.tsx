@@ -27,29 +27,16 @@ function MastodonIcon({ size = 20 }: { size?: number }) {
   );
 }
 
-// Blog/RSS icon
-function BlogIcon({ size = 20 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 11a9 9 0 0 1 9 9" />
-      <path d="M4 4a16 16 0 0 1 16 16" />
-      <circle cx="5" cy="19" r="1" fill="currentColor" />
-    </svg>
-  );
-}
-
 const PLATFORM_COLORS: Record<PlatformId, string> = {
   bluesky: "text-sky-500",
   twitter: "text-zinc-900 dark:text-zinc-100",
   mastodon: "text-indigo-500",
-  blog: "text-amber-500",
 };
 
 const PLATFORM_BG: Record<PlatformId, string> = {
   bluesky: "bg-sky-50 dark:bg-sky-950",
   twitter: "bg-zinc-100 dark:bg-zinc-800",
   mastodon: "bg-indigo-50 dark:bg-indigo-950",
-  blog: "bg-amber-50 dark:bg-amber-950",
 };
 
 export function PlatformIcon({
@@ -68,7 +55,6 @@ export function PlatformIcon({
       case "bluesky": return <BlueskyIcon size={size} />;
       case "twitter": return <XIcon size={size} />;
       case "mastodon": return <MastodonIcon size={size} />;
-      case "blog": return <BlogIcon size={size} />;
     }
   })();
 

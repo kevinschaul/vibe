@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback } from "react";
 import { Sidebar, MobileNav } from "@/components/Navigation";
 import { PlatformIcon } from "@/components/PlatformIcon";
 import { ThreadEditor, ThreadItem } from "@/components/compose/ThreadEditor";
-import { BlogEditor, BlogPost } from "@/components/compose/BlogEditor";
 import {
   PLATFORMS,
   PlatformId,
@@ -25,22 +24,17 @@ function newThread(): ThreadItem[] {
   return [{ id: crypto.randomUUID(), content: "", media: [] }];
 }
 
-function newBlog(): BlogPost {
-  return { title: "", content: "", slug: "", tags: "", media: [] };
-}
-
 type PlatformState = {
   enabled: boolean;
   synced: boolean; // keep in sync with base content or override
   thread: ThreadItem[];
-  blog: BlogPost;
 };
 
 function initPlatformState(): Record<PlatformId, PlatformState> {
   return Object.fromEntries(
     PLATFORMS.map((p) => [
       p.id,
-      { enabled: false, synced: true, thread: newThread(), blog: newBlog() },
+      { enabled: false, synced: true, thread: newThread() },
     ])
   ) as Record<PlatformId, PlatformState>;
 }
@@ -74,7 +68,7 @@ export default function ComposePage() {
       setPlatformState((prev) => {
         const next = { ...prev };
         for (const id of Object.keys(next) as PlatformId[]) {
-          if (next[id].synced && id !== "blog") {
+          if (next[id].synced) {
             next[id] = { ...next[id], thread };
           }
         }
@@ -103,13 +97,6 @@ export default function ComposePage() {
     setPlatformState((prev) => ({
       ...prev,
       [id]: { ...prev[id], thread: baseThread, synced: true },
-    }));
-  }
-
-  function updateBlog(blog: BlogPost) {
-    setPlatformState((prev) => ({
-      ...prev,
-      blog: { ...prev.blog, blog },
     }));
   }
 
@@ -188,17 +175,6 @@ export default function ComposePage() {
           };
         }
 
-        if (plat.id === "blog" && credentials.blog) {
-          const blog = state.blog;
-          platforms.blog = {
-            enabled: true,
-            credentials: credentials.blog,
-            title: blog.title,
-            content: blog.content,
-            slug: blog.slug || blog.title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, ""),
-            tags: blog.tags.split(",").map((t) => t.trim()).filter(Boolean),
-          };
-        }
       }
 
       const res = await fetch("/api/publish", {
@@ -337,13 +313,6 @@ export default function ComposePage() {
                           onChange={syncBase}
                           charLimit={null}
                           placeholder="What's on your mind?"
-                        />
-                      </div>
-                    ) : currentPlatformDef?.id === "blog" ? (
-                      <div className="rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4">
-                        <BlogEditor
-                          post={currentState!.blog}
-                          onChange={updateBlog}
                         />
                       </div>
                     ) : (
