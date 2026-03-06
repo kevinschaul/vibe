@@ -1,0 +1,4 @@
+# Next.js build output and generated files at repo root
+.next/
+node_modules/
+next-env.d.ts
